@@ -26,25 +26,34 @@ export default function RevisarAnuncio() {
 
   const carregarAnuncio = async () => {
     try {
-      const response = await api.get(`/admin/anuncios/listar/${id}`);
-      const anuncio = response.data;
+      setLoading(true);
+      const response = await api.get(`/admin/anuncios/detalhe/${id}`);
+      console.log('Resposta da API:', response.data);
       
-      setFormData({
-        status: anuncio.status || '',
-        dias_para_expirar: anuncio.dias_para_expirar || 0,
-        nome: anuncio.nome || '',
-        descricao: anuncio.descricao || '',
-        preco: anuncio.preco || 0,
-        link: anuncio.link || '',
-        foto: null
-      });
+      if (response.data) {
+        setFormData(prev => ({
+          ...prev,
+          status: response.data.status || 'PENDENTE',
+          nome: response.data.nome,
+          descricao: response.data.descricao,
+          preco: response.data.preco,
+          link: response.data.link || '',
+          dias_para_expirar: 30
+        }));
+        setPreviewImage(`https://skyvendamz.up.railway.app/anuncio/${response.data.imagem}`);
+      }
+    } catch (err) {
+      console.error('Erro completo:', err);
+      console.error('URL requisitada:', err.config?.url);
+      console.error('Resposta da API:', err.response?.data);
       
-      setPreviewImage(`https://skyvendamz.up.railway.app/anuncio/${anuncio.imagem}`);
+      if (err.response?.status === 404) {
+        setErro('Anúncio não encontrado.');
+      } else {
+        setErro('Erro ao carregar anúncio. Por favor, tente novamente.');
+      }
+    } finally {
       setLoading(false);
-    } catch (error) {
-      setErro('Erro ao carregar anúncio');
-      setLoading(false);
-      console.error('Erro:', error);
     }
   };
 
@@ -69,27 +78,49 @@ export default function RevisarAnuncio() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     try {
-      const submitData = new FormData();
-      Object.keys(formData).forEach(key => {
-        if (formData[key] !== null) {
-          submitData.append(key, formData[key]);
+      setLoading(true);
+      
+      // Criar FormData com todos os campos obrigatórios
+      const formDataToSend = new FormData();
+      
+      // Campos obrigatórios
+      formDataToSend.append('status', formData.status);
+      formDataToSend.append('dias_para_expirar', formData.dias_para_expirar.toString());
+      formDataToSend.append('nome', formData.nome || anuncio.nome);
+      formDataToSend.append('descricao', formData.descricao || anuncio.descricao);
+      formDataToSend.append('preco', formData.preco?.toString() || anuncio.preco.toString());
+      
+      // Campo opcional
+      if (formData.link || anuncio.link) {
+        formDataToSend.append('link', formData.link || anuncio.link);
+      }
+      
+      // Campo foto (opcional)
+      if (formData.foto) {
+        formDataToSend.append('foto', formData.foto);
+      }
+
+      // Log para debug
+      console.log('Dados enviados:', Object.fromEntries(formDataToSend));
+
+      // Endpoint exato conforme documentação
+      const response = await api.put(`/admin/anuncios/revisar/${id}`, formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'accept': 'application/json'
         }
       });
 
-      await api.put(`/admin/anuncios/revisar/${id}`, submitData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      navigate('/lista-anuncios');
-    } catch (error) {
-      setErro('Erro ao revisar anúncio');
+      console.log('Resposta da API:', response.data);
+      alert('Anúncio revisado com sucesso!');
+      navigate('/anuncios');
+    } catch (err) {
+      console.error('Erro ao revisar:', err);
+      console.error('Resposta da API:', err.response?.data);
+      setErro(err.response?.data?.detail || 'Erro ao revisar anúncio');
+    } finally {
       setLoading(false);
-      console.error('Erro:', error);
     }
   };
 
@@ -127,10 +158,9 @@ export default function RevisarAnuncio() {
               className="w-full p-2 border rounded-md"
               required
             >
-              <option value="">Selecione um status</option>
-              <option value="aprovado">Aprovado</option>
-              <option value="pendente">Pendente</option>
-              <option value="rejeitado">Rejeitado</option>
+              <option value="PENDENTE">Pendente</option>
+              <option value="APROVADO">Aprovar</option>
+              <option value="REJEITADO">Rejeitar</option>
             </select>
           </div>
 
@@ -145,7 +175,7 @@ export default function RevisarAnuncio() {
               onChange={handleInputChange}
               className="w-full p-2 border rounded-md"
               required
-              min="0"
+              min="1"
             />
           </div>
 
@@ -197,7 +227,7 @@ export default function RevisarAnuncio() {
               Link
             </label>
             <input
-              type="url"
+              type="text"
               name="link"
               value={formData.link}
               onChange={handleInputChange}
@@ -253,4 +283,4 @@ export default function RevisarAnuncio() {
       </form>
     </div>
   );
-} 
+}

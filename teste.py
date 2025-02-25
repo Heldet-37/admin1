@@ -3,7 +3,7 @@ import requests
 url = "https://skyvendamz.up.railway.app/admin/denuncia_produtos/"
 headers = {
     "accept": "application/json",
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzQyMzgzMzI4fQ.QUIQDW7wTqi2nM2iR9AR4wHTXQU-gBLDdc28Psl_XAc"
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwicm9sZSI6ImFkbWluIiwiZXhwIjoxNzQyNDU2ODAyfQ.ACRKlAf6Ibr9msjulobgvL-C9P17vboOqrZkdpBABXA"
 }
 
 response = requests.get(url, headers=headers)

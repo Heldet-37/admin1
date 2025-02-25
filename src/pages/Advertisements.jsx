@@ -113,9 +113,13 @@ export default function Advertisements() {
             {anuncio.imagem && (
               <div className="aspect-w-16 aspect-h-9">
                 <img
-                  src={`https://skyvendamz.up.railway.app/anuncio/${anuncio.imagem}`}
+                  src={`https://skyvendamz.up.railway.app/anuncios/${anuncio.imagem}`}
                   alt={anuncio.nome || 'Anúncio'}
                   className="object-cover w-full h-48"
+                  onError={(e) => {
+                    console.error('Erro ao carregar imagem:', e);
+                    e.target.style.display = 'none';
+                  }}
                 />
               </div>
             )}
