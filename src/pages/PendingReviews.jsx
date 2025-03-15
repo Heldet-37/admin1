@@ -11,7 +11,7 @@ export default function PendingReviews() {
   useEffect(() => {
     const fetchPendingReviews = async () => {
       try {
-        const response = await api.get('https://skyvendamz.up.railway.app/admin/usuarios/pendetes/');
+        const response = await api.get('https://skyvendamz-production.up.railway.app/admin/usuarios/pendetes/');
         console.log('Dados recebidos:', response.data); // Debug
         setUsers(response.data);
       } catch (err) {
@@ -91,11 +91,11 @@ export default function PendingReviews() {
               {/* Foto do usuário */}
               <div className="absolute bottom-0 left-6 transform translate-y-1/2">
                 <img 
-                  src={`https://skyvendamz.up.railway.app/documentos/${user.info_usuario.foto_retrato}`}
+                  src={`https://skyvendamz-production.up.railway.app/documentos/${user.info_usuario.foto_retrato}`}
                   alt={user.nome}
                   className="w-24 h-24 rounded-full border-4 border-white object-cover bg-white cursor-pointer"
                   onClick={() => setSelectedImage({
-                    url: `https://skyvendamz.up.railway.app/documentos/${user.info_usuario.foto_retrato}`,
+                    url: `https://skyvendamz-production.up.railway.app/documentos/${user.info_usuario.foto_retrato}`,
                     title: 'Foto de Retrato'
                   })}
                 />
@@ -135,12 +135,12 @@ export default function PendingReviews() {
                   <div 
                     className="cursor-pointer hover:opacity-75 transition-opacity"
                     onClick={() => setSelectedImage({
-                      url: `https://skyvendamz.up.railway.app/documentos/${user.info_usuario.foto_bi_frente}`,
+                      url: `https://skyvendamz-production.up.railway.app/documentos/${user.info_usuario.foto_bi_frente}`,
                       title: 'BI - Frente'
                     })}
                   >
                     <img 
-                      src={`https://skyvendamz.up.railway.app/documentos/${user.info_usuario.foto_bi_frente}`}
+                      src={`https://skyvendamz-production.up.railway.app/documentos/${user.info_usuario.foto_bi_frente}`}
                       alt="BI Frente"
                       className="w-full h-32 object-cover rounded-lg"
                     />
@@ -151,12 +151,12 @@ export default function PendingReviews() {
                   <div 
                     className="cursor-pointer hover:opacity-75 transition-opacity"
                     onClick={() => setSelectedImage({
-                      url: `https://skyvendamz.up.railway.app/documentos/${user.info_usuario.foto_bi_verso}`,
+                      url: `https://skyvendamz-production.up.railway.app/documentos/${user.info_usuario.foto_bi_verso}`,
                       title: 'BI - Verso'
                     })}
                   >
                     <img 
-                      src={`https://skyvendamz.up.railway.app/documentos/${user.info_usuario.foto_bi_verso}`}
+                      src={`https://skyvendamz-production.up.railway.app/documentos/${user.info_usuario.foto_bi_verso}`}
                       alt="BI Verso"
                       className="w-full h-32 object-cover rounded-lg"
                     />

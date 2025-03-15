@@ -40,7 +40,7 @@ export default function RevisarAnuncio() {
           link: response.data.link || '',
           dias_para_expirar: 30
         }));
-        setPreviewImage(`https://skyvendamz.up.railway.app/anuncio/${response.data.imagem}`);
+        setPreviewImage(`https://skyvendamz-production.up.railway.app/anuncio/${response.data.imagem}`);
       }
     } catch (err) {
       console.error('Erro completo:', err);

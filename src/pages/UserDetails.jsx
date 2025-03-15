@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import api from '../utils/api';
 import Pagination from '../components/Pagination';
 import { 
   User, Package, Clock, CreditCard, RefreshCw, AlertTriangle,
-  ChevronLeft, LayoutList, History, Filter
+  ChevronLeft, LayoutList, History, Filter, ExternalLink
 } from 'lucide-react';
 
 export default function UserDetails() {
@@ -77,7 +77,12 @@ export default function UserDetails() {
             total_pages: Math.ceil((response.data.total || 0) / response.data.limit)
           });
         } else {
-          const response = await api.get(`/admin/${userId}/transacoes/`);
+          const response = await api.get(`/admin/${userId}/transacoes`, {
+            params: {
+              page: currentTransactionPage,
+              page_size: 10
+            }
+          });
           setTransactions({
             total: response.data.total || 0,
             transacoes: response.data.transacoes || [],
@@ -137,7 +142,7 @@ export default function UserDetails() {
           <div className="flex-shrink-0 h-10 w-10">
             {product.capa ? (
               <img 
-                src={`https://skyvendamz.up.railway.app/produto/${product.capa}`} 
+                src={`https://skyvendamz-production.up.railway.app/produto/${product.capa}`} 
                 alt={product.nome}
                 className="h-10 w-10 rounded-lg object-cover"
               />
@@ -290,6 +295,7 @@ export default function UserDetails() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Valor</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -323,6 +329,15 @@ export default function UserDetails() {
                       }`}>
                         {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
                       </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <Link 
+                        to={`/transactions/${transaction.id}`}
+                        className="text-blue-600 hover:text-blue-900 inline-flex items-center"
+                      >
+                        <span>Ver Detalhes</span>
+                        <ExternalLink className="w-4 h-4 ml-1" />
+                      </Link>
                     </td>
                   </tr>
                 ))}

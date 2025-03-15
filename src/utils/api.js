@@ -2,14 +2,14 @@ import axios from 'axios';
 import useAuthStore from '../store/authStore';
 
 const api = axios.create({
-  baseURL: 'https://skyvendamz.up.railway.app',
+  baseURL: 'https://skyvendamz-production.up.railway.app',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   }
 });
 
-// Interceptor para adicionar o token em todas as requisições
+// Interceptor para requisições
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('access_token');
   if (token) {
@@ -20,7 +20,7 @@ api.interceptors.request.use((config) => {
   return Promise.reject(error);
 });
 
-// Interceptor para tratar erros de autenticação
+// Interceptor para respostas
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -37,4 +37,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api; 
+export default api;

@@ -28,7 +28,7 @@ function FotoDetalhes() {
           return;
         }
 
-        const response = await axios.get('https://skyvendamz.up.railway.app/admin/usuarios/verificados/', {
+        const response = await axios.get('https://https://skyvendamz-production.up.railway.app/admin/usuarios/verificados/', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -62,7 +62,7 @@ function FotoDetalhes() {
     try {
       setIsSubmitting(true);
       const token = localStorage.getItem('access_token');
-      await axios.put(`https://skyvendamz.up.railway.app/admin/usuario/${id}/ativar`, null, {
+      await axios.put(`https://skyvendamz-production.up.railway.app/admin/usuario/${id}/ativar`, null, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -86,7 +86,7 @@ function FotoDetalhes() {
     try {
       setIsSubmitting(true);
       const token = localStorage.getItem('access_token');
-      await axios.put(`https://skyvendamz.up.railway.app/admin/usuario/${id}/desativar`, null, {
+      await axios.put(`https://skyvendamz-production.up.railway.app/admin/usuario/${id}/desativar`, null, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -118,7 +118,7 @@ function FotoDetalhes() {
       // Usando axios diretamente com configurações CORS
       await axios({
         method: 'DELETE',
-        url: `https://skyvendamz.up.railway.app/admin/delete/user/${id}`,
+        url: `https://skyvendamz-production.up.railway.app/admin/delete/user/${id}`,
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -186,7 +186,7 @@ function FotoDetalhes() {
             <div 
               className="border rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => setSelectedImage({
-                url: `https://skyvendamz.up.railway.app/documentos/${fotos.foto_retrato}`,
+                url: `https://skyvendamz-production.up.railway.app/documentos/${fotos.foto_retrato}`,
                 title: 'Foto de Retrato'
               })}
             >
@@ -195,7 +195,7 @@ function FotoDetalhes() {
               </div>
               <div className="aspect-square">
                 <img
-                  src={`https://skyvendamz.up.railway.app/documentos/${fotos.foto_retrato}`}
+                  src={`https://skyvendamz-production.up.railway.app/documentos/${fotos.foto_retrato}`}
                   alt="Retrato"
                   className="w-full h-full object-cover hover:opacity-90 transition-opacity"
                 />
@@ -208,7 +208,7 @@ function FotoDetalhes() {
             <div 
               className="border rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => setSelectedImage({
-                url: `https://skyvendamz.up.railway.app/documentos/${fotos.foto_bi_frente}`,
+                url: `https://skyvendamz-production.up.railway.app/documentos/${fotos.foto_bi_frente}`,
                 title: 'BI - Frente'
               })}
             >
@@ -217,7 +217,7 @@ function FotoDetalhes() {
               </div>
               <div className="aspect-square">
                 <img
-                  src={`https://skyvendamz.up.railway.app/documentos/${fotos.foto_bi_frente}`}
+                  src={`https://skyvendamz-production.up.railway.app/documentos/${fotos.foto_bi_frente}`}
                   alt="BI Frente"
                   className="w-full h-full object-cover hover:opacity-90 transition-opacity"
                 />
@@ -230,7 +230,7 @@ function FotoDetalhes() {
             <div 
               className="border rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => setSelectedImage({
-                url: `https://skyvendamz.up.railway.app/documentos/${fotos.foto_bi_verso}`,
+                url: `https://skyvendamz-production.up.railway.app/documentos/${fotos.foto_bi_verso}`,
                 title: 'BI - Verso'
               })}
             >
@@ -239,7 +239,7 @@ function FotoDetalhes() {
               </div>
               <div className="aspect-square">
                 <img
-                  src={`https://skyvendamz.up.railway.app/documentos/${fotos.foto_bi_verso}`}
+                  src={`https://skyvendamz-production.up.railway.app/documentos/${fotos.foto_bi_verso}`}
                   alt="BI Verso"
                   className="w-full h-full object-cover hover:opacity-90 transition-opacity"
                 />

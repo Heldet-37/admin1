@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://skyvendamz.up.railway.app',
+  baseURL: 'https://skyvendamz-production.up.railway.app',
 });
 
 api.interceptors.request.use((config) => {
